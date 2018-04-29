@@ -3,7 +3,7 @@
  * 
  * author   :   musafar006
  * project  :   dreamNav
- * company  :   musafar.in
+ * website  :   musafar.in
  * 
  */
 
@@ -20,7 +20,7 @@ $(document).ready(function () {
 //     mouseWheelUp - navigates to prev page.
 //     e.deltaY determines down(-1) or up(1) mousewheel direction.
 //     plugin used: "mousewheel"
-//     - - - NEED IMPROVEMENT - - -
+//     - - - NEED IMPROVEMENT FOR RESPONSIVENESS - - -
   $(window).mousewheel(function (e) {
     if ($("#jsResponsive").css('content') !== "\"mob\"" && !($(".dn-current").hasClass("dn-noScroll"))) {
       e.preventDefault();
@@ -31,9 +31,20 @@ $(document).ready(function () {
         scroll(e.deltaY, '');
       }
     }
+    if (($(".dn-current").hasClass("dn-noScroll"))) {
+      $("#stopWondering").animate({
+        width: "101%"
+      }, 100).animate({
+        width: "99%"
+      }, 50).animate({
+        width: "100%"
+      }, 100, function () {
+        processing = false;
+      });
+    }
   });
 
-//  #2 onClick nav anchors, and .dn-trigger
+//  #2 onClick dreamNav anchors, and .dn-trigger
   $(".dreamNav > li > a, .dn-trigger").click(function (e) {
     if ($("#jsResponsive").css('content') !== "\"mob\"") {
       e.preventDefault();
@@ -44,7 +55,6 @@ $(document).ready(function () {
         var next = $(this).attr('href');
         scroll(0, next);
       }
-      $('body').find('.collapse.in').collapse('hide');
     }
   });
 
