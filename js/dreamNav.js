@@ -22,7 +22,7 @@ $(document).ready(function () {
 //     plugin used: "mousewheel"
 //     - - - NEED IMPROVEMENT - - -
   $(window).mousewheel(function (e) {
-    if ($("#jsResponsive").css('content') !== "\"mob\"") {
+    if ($("#jsResponsive").css('content') !== "\"mob\"" && !($(".dn-current").hasClass("dn-noScroll"))) {
       e.preventDefault();
       if (processing === true) {
         return false;
@@ -41,8 +41,7 @@ $(document).ready(function () {
         return false;
       } else {
         processing = true;
-        var filename = $(this).attr('href');
-        var next = filename.substr(0, filename.lastIndexOf('.'));
+        var next = $(this).attr('href');
         scroll(0, next);
       }
       $('body').find('.collapse.in').collapse('hide');
