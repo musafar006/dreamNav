@@ -1,0 +1,21 @@
+/* ******************************** Scroll ********************************** */
+
+.dreamSteps {
+  position: absolute;
+  width: 100%;
+}
+.dreamSteps:not(#dreamNav) {
+  height: 100%;
+}
+.dreamSteps:not(.dn-current) {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  #jsResponsive {
+    content: 'mob';
+  }
+  .dreamSteps.dn-current {
+    position: relative;
+  }
+}
