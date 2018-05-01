@@ -1,4 +1,11 @@
-/* ******************************** Scroll ********************************** */
+/*
+ * Created  :   1st Feb 2016
+ * 
+ * author   :   musafar006
+ * project  :   dreamNav
+ * website  :   musafar.in
+ * 
+ */
 
 .dreamSteps {
   position: absolute;
@@ -10,12 +17,7 @@
 .dreamSteps:not(.dn-current) {
   display: none;
 }
-
-@media (max-width: 767px) {
-  #jsResponsive {
-    content: 'mob';
-  }
-  .dreamSteps.dn-current {
-    position: relative;
-  }
+.dn-noScroll {
+  height: 100vh;
+  overflow: auto;
 }

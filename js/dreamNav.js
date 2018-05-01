@@ -1,5 +1,5 @@
 /*
- * Created on: 1st Feb 2016
+ * Created  :   1st Feb 2016
  * 
  * author   :   musafar006
  * project  :   dreamNav
@@ -22,39 +22,22 @@ $(document).ready(function () {
 //     plugin used: "mousewheel"
 //     - - - NEED IMPROVEMENT FOR RESPONSIVENESS - - -
   $(window).mousewheel(function (e) {
-    if ($("#jsResponsive").css('content') !== "\"mob\"" && !($(".dn-current").hasClass("dn-noScroll"))) {
+    if (processing === false && !($(".dn-current").hasClass("dn-noScroll"))) {
       e.preventDefault();
-      if (processing === true) {
-        return false;
-      } else {
-        processing = true;
-        scroll(e.deltaY, '');
-      }
-    }
-    if (($(".dn-current").hasClass("dn-noScroll"))) {
-      $("#stopWondering").animate({
-        width: "101%"
-      }, 100).animate({
-        width: "99%"
-      }, 50).animate({
-        width: "100%"
-      }, 100, function () {
-        processing = false;
-      });
+      processing = true;
+      scroll(e.deltaY, '');
     }
   });
 
 //  #2 onClick dreamNav anchors, and .dn-trigger
   $(".dreamNav > li > a, .dn-trigger").click(function (e) {
-    if ($("#jsResponsive").css('content') !== "\"mob\"") {
-      e.preventDefault();
-      if (processing === true) {
-        return false;
-      } else {
-        processing = true;
-        var next = $(this).attr('href');
-        scroll(0, next);
-      }
+    e.preventDefault();
+    if (processing === true) {
+      return false;
+    } else {
+      processing = true;
+      var next = $(this).attr('href');
+      scroll(0, next);
     }
   });
 
@@ -81,7 +64,9 @@ $(document).ready(function () {
       }, 50).animate({
         width: "100%"
       }, 100, function () {
-        processing = false;
+        setTimeout(function () {
+          processing = false;
+        }, 250);
       });
       return false;
     }
@@ -152,13 +137,15 @@ $(document).ready(function () {
       }
     }
   }
-  
+
   function afterScroll(current, next) {
     current.removeClass("dn-current");
     next.addClass("dn-current");
     if (current.hasClass('dn-once')) {
       current.hide().removeClass('dreamSteps');
     }
-    processing = false;
+    setTimeout(function () {
+      processing = false;
+    }, 250);
   }
 });
