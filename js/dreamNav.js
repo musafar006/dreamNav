@@ -7,12 +7,22 @@
  * 
  */
 
-$(document).ready(function () {
+(function ($) {
+
+  var settings;
+  $.fn.dreamNav = function (options) {
+
+    settings = $.extend({
+      // These are the defaults.
+      directions: ["top", "bottom", "right", "left"],
+      mousewheel: true
+    }, options);
+
 //  Global variables.
 //  start: for iterating through four different directions.
 //  processing: for ignoring all other events if an event is currently processing.
-  window.start = "top";
-  window.processing = false;
+    window.start = settings.directions[settings.directions.length - 1];
+    window.processing = false;
 
 //  Multiple events. Same function: scroll().
 
@@ -21,30 +31,34 @@ $(document).ready(function () {
 //     e.deltaY determines down(-1) or up(1) mousewheel direction.
 //     plugin used: "mousewheel"
 //     - - - NEED IMPROVEMENT FOR RESPONSIVENESS - - -
-  $(window).mousewheel(function (e) {
-    if (processing === false && !($(".dn-current").hasClass("dn-noScroll"))) {
-      e.preventDefault();
-      processing = true;
-      scroll(e.deltaY, '');
-    }
-  });
+    $(window).mousewheel(function (e) {
+      if (processing === false && !($(".dn-current").hasClass("dn-noScroll")) && settings.mousewheel === true) {
+        e.preventDefault();
+        processing = true;
+        scroll(e.deltaY, '');
+      }
+    });
 
-//  #2 onClick dreamNav anchors, and .dn-trigger
-  $(".dreamNav > li > a, .dn-trigger").click(function (e) {
-    e.preventDefault();
-    if (processing === true) {
-      return false;
-    } else {
-      processing = true;
-      var next = $(this).attr('href');
-      scroll(0, next);
-    }
-  });
+//  #2 onClick anchors
+    $(this).click(function (e) {
+      e.preventDefault();
+      if (processing === true) {
+        return false;
+      } else {
+        processing = true;
+        var next = $(this).attr('href');
+        scroll(0, next);
+      }
+    });
 
 
 //  direction: next or prev. Doesn't consider if nextClick is not empty.
 //  nextClick: '' for mousewheel; scroll to next/prev step.
 //             id of block for anchor clicks; scroll to the div block containing the passed id.
+
+    return this;
+  };
+
 
   function scroll(direction, nextClick) {
     var current = $(".dn-current");
@@ -72,7 +86,7 @@ $(document).ready(function () {
     }
 
 //    iterating through 4 different directions.
-    var directions = ["top", "bottom", "right", "left"];
+    var directions = settings.directions;
     var from = directions[($.inArray(start, directions) + 1) % directions.length];
     start = from;
 
@@ -148,4 +162,5 @@ $(document).ready(function () {
       processing = false;
     }, 250);
   }
-});
+
+}(jQuery));
